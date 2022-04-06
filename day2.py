@@ -16,7 +16,11 @@ def parse(puzzle_input):
     return data
     
 def solve(puzzle_data):
-    return 0, 0
+    checksum = 0
+    for row in puzzle_data:
+        row.sort()
+        checksum += row[-1] - row[0]
+    return checksum, 0
 
 puzzle_path = "input_day2.txt"
 with open(puzzle_path) as f:
