@@ -17,10 +17,22 @@ def parse(puzzle_input):
     
 def solve(puzzle_data):
     checksum = 0
+    goal = 0
     for row in puzzle_data:
         row.sort()
         checksum += row[-1] - row[0]
-    return checksum, 0
+        division = 0
+        i = 0
+        while division == 0:
+            value = row[i]
+            remainders = [x%value for x in row]
+            j = 0
+            for j in range(len(remainders)):
+                if remainders[j] == 0 and i != j:
+                    division = row[j]/value
+            i += 1
+        goal += division
+    return checksum, goal
 
 puzzle_path = "input_day2.txt"
 with open(puzzle_path) as f:
