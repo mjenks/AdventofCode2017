@@ -6,11 +6,23 @@ Created on Wed Apr 06 10:51:11 2022
 """
 
 def parse(puzzle_input):
-    data = list(puzzle_input.strip())
+    data = []
+    for char in puzzle_input.strip():
+        data.append(int(char))
     return data
     
 def solve(puzzle_data):
-    return 0, 0
+    captcha = 0
+    i = 0
+    for digit in puzzle_data:
+        if i == len(puzzle_data)-1:
+            test = puzzle_data[-1]
+        else:
+            test = puzzle_data[i+1]
+        if digit == test:
+            captcha += digit
+        i += 1
+    return captcha, 0
 
 puzzle_path = "input_day1.txt"
 with open(puzzle_path) as f:
