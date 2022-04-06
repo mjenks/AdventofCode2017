@@ -13,16 +13,18 @@ def parse(puzzle_input):
     
 def solve(puzzle_data):
     captcha = 0
+    captcha2 = 0
     i = 0
     for digit in puzzle_data:
-        if i == len(puzzle_data)-1:
-            test = puzzle_data[-1]
-        else:
-            test = puzzle_data[i+1]
+        test = puzzle_data[(i+1)%len(puzzle_data)]
         if digit == test:
             captcha += digit
+        step = len(puzzle_data)/2
+        test2 = puzzle_data[(i + step)%len(puzzle_data)]
+        if digit == test2:
+            captcha2 += digit
         i += 1
-    return captcha, 0
+    return captcha, captcha2
 
 puzzle_path = "input_day1.txt"
 with open(puzzle_path) as f:
