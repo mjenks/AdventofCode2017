@@ -12,7 +12,11 @@ def parse(puzzle_input):
     return data
 
 def solve(puzzle_data):
-    return 0, 0
+    count = 0
+    for passphrase in puzzle_data:
+        if len(set(passphrase)) == len(passphrase):
+            count += 1
+    return count, 0
 
 puzzle_path = "input_day4.txt"
 with open(puzzle_path) as f:
