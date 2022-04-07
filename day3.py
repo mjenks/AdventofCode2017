@@ -36,11 +36,24 @@ def solve(puzzle_data):
     #ring is the steps need to get to center
     steps = abs(puzzle_data - center_val) + ring
         
-    return steps, 0
-
+    return steps
+    
+def check_table(puzzle_data):
+    sequence_path = "square_spiral_sums.txt"
+    with open(sequence_path) as f:
+        sequence_file = f.readlines()
+    sequence = []
+    for line in sequence_file[2:-1]:
+        line = line.strip().split()
+        sequence.append(int(line[-1]))
+    for value in sequence:
+        if value > puzzle_data:
+            return value
+    return "not found", value
     
 puzzle_data =  368078
-solution1, solution2 = solve(puzzle_data)
+solution1 = solve(puzzle_data)
+solution2 = check_table(puzzle_data)
 
 print(solution1)
 print(solution2)
