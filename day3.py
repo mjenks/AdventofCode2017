@@ -32,7 +32,7 @@ def solve(puzzle_data):
         for j in range(ring):
             center_val += 2*(4*j + 3) + 1
             
-    #difference between the center value and the number is steps need right or left
+    #difference between the center value and the number is steps needed to center on the side of the ring
     #ring is the steps need to get to center
     steps = abs(puzzle_data - center_val) + ring
         
