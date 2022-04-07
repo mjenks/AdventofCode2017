@@ -13,10 +13,14 @@ def parse(puzzle_input):
 
 def solve(puzzle_data):
     count = 0
+    new_count = 0
     for passphrase in puzzle_data:
         if len(set(passphrase)) == len(passphrase):
             count += 1
-    return count, 0
+            ordered = [''.join(sorted(x)) for x in passphrase]
+            if len(set(ordered)) == len(passphrase):
+                new_count += 1
+    return count, new_count
 
 puzzle_path = "input_day4.txt"
 with open(puzzle_path) as f:
