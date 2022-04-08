@@ -26,8 +26,22 @@ def solve(puzzle_data):
                 for j in range(1,most%len(state)+1):
                     state[(i+j)%len(state)] += 1
                 break
+    loop = 0
+    repeated = state[:]
+    while state != repeated or loop == 0:
+        most = max(state)
+        loop += 1
+        for i in range(len(state)):
+            if state[i] == most:
+                state[i] = 0
+                #add the blocks that evenly divide
+                state = [x + most//len(state) for x in state]
+                #add the remaining blocks starting after the chosen bank
+                for j in range(1,most%len(state)+1):
+                    state[(i+j)%len(state)] += 1
+                break
     
-    return cycles, 0
+    return cycles, loop
 
 puzzle_path = "input_day6.txt"
 with open(puzzle_path) as f:
