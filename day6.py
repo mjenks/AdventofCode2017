@@ -10,7 +10,24 @@ def parse(puzzle_input):
     return data
     
 def solve(puzzle_data):
-    return 0, 0
+    states = set()
+    cycles = 0
+    state = puzzle_data[:]
+    while tuple(state) not in states:
+        states.add(tuple(state))
+        cycles += 1
+        most = max(state)
+        for i in range(len(state)):
+            if state[i] == most:
+                state[i] = 0
+                #add the blocks that evenly divide
+                state = [x + most//len(state) for x in state]
+                #add the remaining blocks starting after the chosen bank
+                for j in range(1,most%len(state)+1):
+                    state[(i+j)%len(state)] += 1
+                break
+    
+    return cycles, 0
 
 puzzle_path = "input_day6.txt"
 with open(puzzle_path) as f:
