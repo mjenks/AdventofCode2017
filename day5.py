@@ -11,22 +11,29 @@ def parse(puzzle_input):
         data.append(int(line.strip()))
     return data
         
-def solve(puzzle_data):
+def solve(puzzle_data, part2 = False):
     loc = 0
     steps = 0
     while loc < len(puzzle_data):
         i = loc
         loc += puzzle_data[i]
-        puzzle_data[i] += 1
+        if part2:
+            if puzzle_data[i] >= 3:
+                puzzle_data[i] -= 1
+            else:
+                puzzle_data[i] += 1
+        else:
+            puzzle_data[i] += 1
         steps += 1
-    return steps, 0
+    return steps
 
 puzzle_path = "input_day5.txt"
 with open(puzzle_path) as f:
     puzzle_input = f.readlines()
     
 puzzle_data = parse(puzzle_input)
-solution1, solution2 = solve(puzzle_data)
+solution1 = solve(puzzle_data[:])
+solution2 = solve(puzzle_data[:], True)
 
 print(solution1)
 print(solution2)
