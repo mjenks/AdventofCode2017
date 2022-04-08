@@ -12,7 +12,14 @@ def parse(puzzle_input):
     return data
         
 def solve(puzzle_data):
-    return 0, 0
+    loc = 0
+    steps = 0
+    while loc < len(puzzle_data):
+        i = loc
+        loc += puzzle_data[i]
+        puzzle_data[i] += 1
+        steps += 1
+    return steps, 0
 
 puzzle_path = "input_day5.txt"
 with open(puzzle_path) as f:
