@@ -9,11 +9,13 @@ class Prog:
     def __init__(self, name, weight, holding):
         self.name = name
         self.weight = weight
+        self.total = self.weight
         self.holding = holding
         self.depth = -1
+        self.balanced = True
 
 def parse(puzzle_input):
-    data = []
+    data = {}
     for line in puzzle_input:
         line = line.strip().split()
         name = line[0]
@@ -25,22 +27,23 @@ def parse(puzzle_input):
         else:
             holding = []
         program = Prog(name, weight, holding)
-        data.append(program)
+        data[name] = program
     return data
     
 def solve(puzzle_data):
-    #build the tree in reverse to find bottom
+    #build the tree in reverse to find bottom and calculate total weights
     i = 0
     placed = set()
+    needed_weight = 0
     while len(placed) != len(puzzle_data):
         if i == 0:    
-            for p in puzzle_data:
+            for p in puzzle_data.values():
                 if len(p.holding) == 0:
                     p.depth = i
                     placed.add(p.name)
         else:
             level = []
-            for p in puzzle_data:
+            for p in puzzle_data.values():
                 if len(p.holding) == 0:
                     continue
                 place = True
@@ -50,12 +53,24 @@ def solve(puzzle_data):
                 if place and p.name not in placed:
                     level.append(p.name)
                     p.depth = i
+                    #calculate total weight from the total weights it holds and check balance
+                    comp_weight = puzzle_data[p.holding[0]].total
+                    for program in p.holding:
+                        held = puzzle_data[program]
+                        p.total += held.total
+                        if held.total != comp_weight:
+                            p.balanced = False
+                            if needed_weight == 0:
+                                needed_weight = held.weight + (comp_weight - held.total)   
+                        
             for name in level:
                 placed.add(name)
             
         i += 1
+        
+        
     
-    return level[0], 0
+    return level[0], needed_weight
 
 puzzle_path = "input_day7.txt"
 with open(puzzle_path) as f:
