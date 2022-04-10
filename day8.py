@@ -43,11 +43,13 @@ def check(condition):
     return False
     
 def solve(puzzle_data):
+    highest = 0
     for inst in puzzle_data:
         if check(inst[3]):
             registers[inst[0]] += inst[1]*inst[2]
+            highest = max(highest, registers[inst[0]])
             
-    return max(registers.values()), 0
+    return max(registers.values()), highest
 
 puzzle_path = "input_day8.txt"
 with open(puzzle_path) as f:
