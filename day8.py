@@ -24,8 +24,26 @@ def parse(puzzle_input):
         data.append([target_reg, action, val, (comp_reg, comp, comp_val)])
     return data
     
+def check(reg, comp, val):
+    if comp == '==':
+        return registers[reg] == val
+    elif comp == '!=':
+        return registers[reg] != val
+    elif comp == '<':
+        return registers[reg] < val
+    elif comp == '<=':
+        return registers[reg] <= val
+    elif comp == '>':
+        return registers[reg] > val
+    elif comp == '>=':
+        return registers[reg] >= val
+    else:
+        print comp, ' unknown'
+    return False
+    
 def solve(puzzle_data):
-    return 0, 0
+    
+    return max(registers), 0
 
 puzzle_path = "input_day8.txt"
 with open(puzzle_path) as f:
