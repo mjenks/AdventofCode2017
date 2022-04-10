@@ -24,7 +24,8 @@ def parse(puzzle_input):
         data.append([target_reg, action, val, (comp_reg, comp, comp_val)])
     return data
     
-def check(reg, comp, val):
+def check(condition):
+    reg, comp, val = condition
     if comp == '==':
         return registers[reg] == val
     elif comp == '!=':
@@ -42,8 +43,11 @@ def check(reg, comp, val):
     return False
     
 def solve(puzzle_data):
-    
-    return max(registers), 0
+    for inst in puzzle_data:
+        if check(inst[3]):
+            registers[inst[0]] += inst[1]*inst[2]
+            
+    return max(registers.values()), 0
 
 puzzle_path = "input_day8.txt"
 with open(puzzle_path) as f:
