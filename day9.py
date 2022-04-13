@@ -14,6 +14,7 @@ def solve(puzzle_data):
     total_score = 0
     score = 0
     garbage = False
+    count = 0
     while i < len(puzzle_data):
         char = puzzle_data[i]
         if not garbage:
@@ -29,9 +30,11 @@ def solve(puzzle_data):
                 i += 1
             elif char == '>':
                 garbage = False
+            else:
+                count += 1
         i+=1
         
-    return total_score, 0
+    return total_score, count
 
 puzzle_path = "input_day9.txt"
 with open(puzzle_path) as f:
