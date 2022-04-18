@@ -14,7 +14,19 @@ def parse(puzzle_input):
     return data
     
 def solve(puzzle_data):
-    return 0, 0
+    group = {0}
+    new = [0]
+    while len(new) > 0:
+        add = []
+        for prog in new:
+            for connect in puzzle_data[prog]:
+                if connect not in group:
+                    add.append(connect)
+                    group.add(connect)
+        new = add[:]
+            
+        
+    return len(group), 0
 
 puzzle_path = "input_day12.txt"
 with open(puzzle_path) as f:
