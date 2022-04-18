@@ -13,9 +13,9 @@ def parse(puzzle_input):
         data.append([int(x) for x in connected])
     return data
     
-def solve(puzzle_data):
-    group = {0}
-    new = [0]
+def findGroup(i, puzzle_data):
+    group = {i}
+    new = [i]
     while len(new) > 0:
         add = []
         for prog in new:
@@ -24,10 +24,21 @@ def solve(puzzle_data):
                     add.append(connect)
                     group.add(connect)
         new = add[:]
+    return group
+    
+def solve(puzzle_data):
+    group = findGroup(0, puzzle_data)
+    connected = set()
+    groups = 0
+    for i in range(len(puzzle_data)):
+        if i not in connected:
+            groups += 1
+            for prog in findGroup(i, puzzle_data):
+                connected.add(prog)
             
-        
-    return len(group), 0
-
+    
+    return len(group), groups
+    
 puzzle_path = "input_day12.txt"
 with open(puzzle_path) as f:
     puzzle_input = f.readlines()
