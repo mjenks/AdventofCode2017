@@ -28,7 +28,21 @@ def solve(puzzle_data):
         depth, ran = layer
         if scanner_pos(ran, depth) == 0:
             severity += depth*ran
-    return severity, 0
+    caught = True
+    delay = 1
+    while caught:
+        safe = True
+        for layer in puzzle_data:
+            depth, ran = layer
+            if scanner_pos(ran, depth+delay) == 0:
+                safe = False
+                break
+        if safe:
+            caught = False
+            safe_delay = delay
+        delay += 1
+                
+    return severity, safe_delay
 
 puzzle_path = "input_day13.txt"
 with open(puzzle_path) as f:
