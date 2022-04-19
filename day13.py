@@ -12,8 +12,23 @@ def parse(puzzle_input):
         data.append((int(line[0]),int(line[1])))
     return data
     
+def scanner_pos(ran, time):
+    pattern = 2*ran -2
+    step = time%pattern
+    last = ran - 1
+    if step < ran:
+        loc = step
+    else:
+        loc = 2*last - step        
+    return loc    
+    
 def solve(puzzle_data):
-    return 0, 0
+    severity = 0
+    for layer in puzzle_data:
+        depth, ran = layer
+        if scanner_pos(ran, depth) == 0:
+            severity += depth*ran
+    return severity, 0
 
 puzzle_path = "input_day13.txt"
 with open(puzzle_path) as f:
