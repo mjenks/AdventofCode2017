@@ -20,22 +20,32 @@ def parse(puzzle_input):
     return data
     
 def spin(line, num):
-    return line[(-1*num):] + line[:(num-1)]
+    return line[(-1*num):] + line[:(-1*num)]
     
 def exchange(line, a, b):
-    new = line[:]
+    new = list(line)
     new[a] = line[b]
     new[b] = line[a]
-    return new
+    return ''.join(new)
     
 def partner(line, a, b):
-    new = line[:]
+    new = list(line)
     new[line.index(a)] = b
     new[line.index(b)] = a
-    return new
+    return ''.join(new)
     
 def solve(puzzle_data):
-    return 0, 0
+    line = 'abcdefghijklmnop'
+    for step in puzzle_data:
+        typ = step[0]
+        if typ == 's':
+            line = spin(line, step[1])
+        elif typ == 'x':
+            line = exchange(line, step[1][0], step[1][1])
+        elif typ == 'p':
+            line = partner(line, step[1][0], step[1][1])
+            
+    return line, 0
 
 puzzle_path = "input_day16.txt"
 with open(puzzle_path) as f:
