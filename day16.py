@@ -19,6 +19,21 @@ def parse(puzzle_input):
             data.append((typ, ab))
     return data
     
+def spin(line, num):
+    return line[(-1*num):] + line[:(num-1)]
+    
+def exchange(line, a, b):
+    new = line[:]
+    new[a] = line[b]
+    new[b] = line[a]
+    return new
+    
+def partner(line, a, b):
+    new = line[:]
+    new[line.index(a)] = b
+    new[line.index(b)] = a
+    return new
+    
 def solve(puzzle_data):
     return 0, 0
 
