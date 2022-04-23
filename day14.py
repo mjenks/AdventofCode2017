@@ -7,6 +7,11 @@ Created on Fri Apr 22 21:07:30 2022
 
 def knotHash(string):
     data = [ord(x) for x in string]
+    data.append(17)
+    data.append(31)
+    data.append(73)
+    data.append(47)
+    data.append(23)
     size = 256
     current_list = range(size)
     skip_size = 0
@@ -42,7 +47,23 @@ def knotHash(string):
     return ''.join(knot_hash)
     
 def solve(puzzle_data):
-    return 0, 0
+    hash_out = []
+    for i in range(128):
+        hash_in = puzzle_data + '-' + str(i)
+        hash_out.append(knotHash(hash_in))
+        
+    #str(bin(int(hex_number, 16)))[2:].zfill(num_digits)
+    mem_grid = []
+    for row in hash_out:
+        mem_row = []
+        for digit in row:
+            block = str(bin(int(digit, 16)))[2:].zfill(4)
+            for val in block:
+                mem_row.append(int(val))
+        mem_grid.append(mem_row)
+        
+    used = [sum(x) for x in mem_grid]
+    return sum(used), 0
 
     
 puzzle_data = 'nbysizxe'
