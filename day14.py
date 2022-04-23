@@ -5,14 +5,15 @@ Created on Fri Apr 22 21:07:30 2022
 @author: mjenks
 """
 
-def knotHash(puzzle_data):
+def knotHash(string):
+    data = [ord(x) for x in string]
     size = 256
     current_list = range(size)
     skip_size = 0
     position = 0
     rounds = 0
     while rounds < 64:
-        for length in puzzle_data:
+        for length in data:
             new_list = current_list[:]
             for i in range(length):
                 new_list[(position + i)%size] = current_list[(position + (length - 1) - i)%size]
