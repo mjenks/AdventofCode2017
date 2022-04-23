@@ -52,7 +52,6 @@ def solve(puzzle_data):
         hash_in = puzzle_data + '-' + str(i)
         hash_out.append(knotHash(hash_in))
         
-    #str(bin(int(hex_number, 16)))[2:].zfill(num_digits)
     mem_grid = []
     for row in hash_out:
         mem_row = []
@@ -62,8 +61,39 @@ def solve(puzzle_data):
                 mem_row.append(int(val))
         mem_grid.append(mem_row)
         
-    used = [sum(x) for x in mem_grid]
-    return sum(used), 0
+    used = sum(sum(x) for x in mem_grid)
+    
+    regions = []
+    for i in range(128):
+        row = mem_grid[i]
+        for j in range(128):
+            square = row[j]
+            if square == 1:
+                new_region = True
+                for region in regions:
+                    if ((i-1,j) in region) or ((i,j-1) in region):
+                        region.add((i,j))
+                        new_region = False
+                if new_region:
+                    regions.append({(i,j)})
+        
+    duplicates = True
+    while duplicates:
+        real_regions = []
+        for region in regions:
+            new_region = True
+            for reg in real_regions:
+                if not region.isdisjoint(reg):
+                    reg.update(region)
+                    new_region = False
+            if new_region:
+                real_regions.append(region)
+        if len(regions) == len(real_regions):
+            duplicates = False
+        regions = real_regions[:]
+            
+    
+    return used, len(regions)
 
     
 puzzle_data = 'nbysizxe'
