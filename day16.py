@@ -35,7 +35,9 @@ def partner(line, a, b):
     return ''.join(new)
     
 def solve(puzzle_data):
-    line = 'abcdefghijklmnop'
+    start = 'abcdefghijklmnop'
+    line = start[:]
+    pattern = [start]
     for step in puzzle_data:
         typ = step[0]
         if typ == 's':
@@ -44,8 +46,20 @@ def solve(puzzle_data):
             line = exchange(line, step[1][0], step[1][1])
         elif typ == 'p':
             line = partner(line, step[1][0], step[1][1])
-            
-    return line, 0
+    pattern.append(line[:])
+    i = 1
+    while line != start:
+        for step in puzzle_data:
+            typ = step[0]
+            if typ == 's':
+                line = spin(line, step[1])
+            elif typ == 'x':
+                line = exchange(line, step[1][0], step[1][1])
+            elif typ == 'p':
+                line = partner(line, step[1][0], step[1][1])
+        pattern.append(line[:])
+        i += 1
+    return pattern[1], pattern[1000000000%i]
 
 puzzle_path = "input_day16.txt"
 with open(puzzle_path) as f:
