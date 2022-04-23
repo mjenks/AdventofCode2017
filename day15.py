@@ -12,8 +12,24 @@ def parse(puzzle_input):
         data.append(int(line[-1]))
     return data
     
+def genA(prior):
+    return (prior*16807)%2147483647    
+    
+def genB(prior):
+    return (prior*48271)%2147483647   
+
 def solve(puzzle_data):
-    return 0 ,0
+    a = puzzle_data[0]
+    b = puzzle_data[1]
+    count = 0
+    i = 0
+    while i < 40000000:
+        a = genA(a)
+        b = genB(b)
+        if str(bin(a))[-16:] == str(bin(b))[-16:]:
+            count += 1
+        i += 1
+    return count, 0
 
 puzzle_path = "input_day15.txt"
 with open(puzzle_path) as f:
