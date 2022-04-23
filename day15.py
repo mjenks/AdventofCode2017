@@ -23,20 +23,23 @@ def solve(puzzle_data):
     b = puzzle_data[1]
     count = 0
     i = 0
-    while i < 40000000:
+    while i < 5000000:
         a = genA(a)
+        while a%4 != 0:
+            a = genA(a)
         b = genB(b)
+        while b%8 != 0:
+            b = genB(b)
         if str(bin(a))[-16:] == str(bin(b))[-16:]:
             count += 1
         i += 1
-    return count, 0
+    return count
 
 puzzle_path = "input_day15.txt"
 with open(puzzle_path) as f:
     puzzle_input = f.readlines()
     
 puzzle_data = parse(puzzle_input)
-solution1, solution2 = solve(puzzle_data)
+solution = solve(puzzle_data)
 
-print(solution1)
-print(solution2)
+print(solution)
