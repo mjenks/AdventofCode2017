@@ -59,10 +59,10 @@ def join(squares, num):
         rows.append(''.join(row))        
     return rows
     
-def solve():
+def solve(iterate):
     image = ['.#.', '..#','###']
     iterations = 0
-    while iterations < 5:
+    while iterations < iterate:
         if len(image[0])%2 == 0:
             num = len(image[0])//2
             squares = []
@@ -79,7 +79,7 @@ def solve():
         iterations += 1
         image = join(new, num)
     pixels_on = sum([x.count('#') for x in image])
-    return pixels_on, 0
+    return pixels_on
 
 puzzle_path = "input_day21.txt"
 #puzzle_path = "day21_example.txt"
@@ -87,7 +87,8 @@ with open(puzzle_path) as f:
     puzzle_input = f.readlines()
     
 puzzle_data = parse(puzzle_input)
-solution1, solution2 = solve()
+solution1 = solve(5)
+solution2 = solve(18)
 
 print(solution1)
 print(solution2)
