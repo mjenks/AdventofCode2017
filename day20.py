@@ -36,14 +36,24 @@ def parse(puzzle_input):
     
 def solve(puzzle_data):
     closest = 0
-    for i in range(10000):
+    alive = [1 for x in puzzle_data]
+    for i in range(1000):
         dist = []
+        live = alive[:]
         for part in puzzle_data:
             part.move()
             dist.append(part.dist())
         closest = dist.index(min(dist))
+        for j in range(len(puzzle_data)):
+            if alive[j] == 1:
+                for k in range(len(puzzle_data)):
+                    if j == k:
+                        continue
+                    if puzzle_data[j].p == puzzle_data[k].p and live[k] == 1:
+                        alive[j] = 0
+                        alive[k] = 0
             
-    return closest, 0
+    return closest, sum(alive)
 
 puzzle_path = "input_day20.txt"
 with open(puzzle_path) as f:
