@@ -18,6 +18,7 @@ def solve(puzzle_data):
     j = puzzle_data[i].index('|')
     direction = 'd'
     end = False
+    steps = 0
     while not end:
         symb = puzzle_data[i][j]
         if symb == ' ':
@@ -27,6 +28,7 @@ def solve(puzzle_data):
                 s = symb
                 while s != ' ':
                     i += 1
+                    steps += 1
                     s = puzzle_data[i][j]
                     if s.isalpha():
                         letters.append(s)  
@@ -35,6 +37,7 @@ def solve(puzzle_data):
                 s = symb
                 while s != ' ':
                     i -= 1
+                    steps += 1
                     s = puzzle_data[i][j]
                     if s.isalpha():
                         letters.append(s) 
@@ -44,6 +47,7 @@ def solve(puzzle_data):
                 s = symb
                 while s != ' ':
                     j += 1
+                    steps += 1
                     s = puzzle_data[i][j]
                     if s.isalpha():
                         letters.append(s) 
@@ -52,6 +56,7 @@ def solve(puzzle_data):
                 s = symb
                 while s != ' ':
                     j -= 1
+                    steps += 1
                     s = puzzle_data[i][j]
                     if s.isalpha():
                         letters.append(s)
@@ -80,7 +85,7 @@ def solve(puzzle_data):
                 j += 1
             else:
                 j -= 1
-    return ''.join(letters), 0
+    return ''.join(letters), steps
 
 puzzle_path = "input_day19.txt"
 with open(puzzle_path) as f:
