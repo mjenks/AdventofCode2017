@@ -16,7 +16,7 @@ class Particle:
         self.p = [self.p[i] + self.v[i] for i in range(3)]
         
     def dist(self):
-        return sum(self.p)
+        return sum([abs(x) for x in self.p])
 
 def parse(puzzle_input):
     data = []
@@ -35,7 +35,15 @@ def parse(puzzle_input):
     return data
     
 def solve(puzzle_data):
-    return 0, 0
+    closest = 0
+    for i in range(10000):
+        dist = []
+        for part in puzzle_data:
+            part.move()
+            dist.append(part.dist())
+        closest = dist.index(min(dist))
+            
+    return closest, 0
 
 puzzle_path = "input_day20.txt"
 with open(puzzle_path) as f:
