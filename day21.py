@@ -46,16 +46,17 @@ def enhance(sqr):
         return sqr
     
 def join(squares, num):
-    num_rows = len(squares[0])*num
+    size = len(squares[0])
+    num_rows = size*num
     rows = []
     j = 0
     for i in range(num_rows):
+        if i != 0 and i%size == 0:
+            j += 1
         row = []
         for sqr in squares[num*j:num*j+num]:
             row.append(sqr[i%len(sqr)])
-        rows.append(''.join(row))
-        if i != 0 and i%len(squares[0]) == 0:
-            j += 1
+        rows.append(''.join(row))        
     return rows
     
 def solve():
