@@ -21,13 +21,18 @@ def solve(puzzle_data):
     x = 12
     y = 12
     facing = 0 #compass = ['n', 'e', 's', 'w']
-    while burst < 10000:
+    while burst < 10000000:
         current = puzzle_data[x][y]
         if current == '#':
             facing = (facing+1)%4
+            puzzle_data[x][y] = 'F'
+        elif current == 'F':
+            facing = (facing+2)%4
             puzzle_data[x][y] = '.'
-        else:
+        elif current == '.':
             facing = (facing-1)%4
+            puzzle_data[x][y] = 'W'
+        else:
             puzzle_data[x][y] = '#'
             inf += 1
         #move
@@ -52,16 +57,13 @@ def solve(puzzle_data):
             else:
                 y -= 1
         burst += 1
-    for line in puzzle_data:
-        print ''.join(line)
-    return inf, 0
+    return inf
 
 puzzle_path = "input_day22.txt"
 with open(puzzle_path) as f:
     puzzle_input = f.readlines()
     
 puzzle_data = parse(puzzle_input)
-solution1, solution2 = solve(puzzle_data)
+solution = solve(puzzle_data)
 
-print(solution1)
-print(solution2)
+print(solution)
