@@ -61,7 +61,13 @@ def doStep(inst):
     return i 
     
 def solve(puzzle_data):
-    return 0, 0
+    i = 0
+    count_mul = 0
+    while i >= 0 and i < len(puzzle_data):
+        if puzzle_data[i][0] == 'mul':
+            count_mul += 1
+        i += doStep(puzzle_data[i])
+    return count_mul, 0
 
 puzzle_path = "input_day23.txt"
 with open(puzzle_path) as f:
