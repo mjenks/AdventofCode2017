@@ -6,7 +6,7 @@ Created on Thu Apr 28 13:47:03 2022
 """
 
 reg = {
-       'a': 0,
+       'a': 1,
        'b': 0,
        'c': 0,
        'd': 0,
@@ -62,19 +62,24 @@ def doStep(inst):
     
 def solve(puzzle_data):
     i = 0
-    count_mul = 0
     while i >= 0 and i < len(puzzle_data):
-        if puzzle_data[i][0] == 'mul':
-            count_mul += 1
+        if i == 19:
+            if reg['b']%reg['d'] == 0:
+                reg['f'] = 0
+            reg['e'] -= reg['g']
+            reg['g'] = 0
+        if i == 23:
+            if reg['f'] == 0:
+                reg['d'] -= reg['g']
+                reg['g'] = 0
         i += doStep(puzzle_data[i])
-    return count_mul, 0
+    return reg['h']
 
 puzzle_path = "input_day23.txt"
 with open(puzzle_path) as f:
     puzzle_input = f.readlines()
     
 puzzle_data = parse(puzzle_input)
-solution1, solution2 = solve(puzzle_data)
+solution = solve(puzzle_data)
 
-print(solution1)
-print(solution2)
+print(solution)
