@@ -20,13 +20,13 @@ def solve(puzzle_data):
             comp_sort[pin].append(i)
     options = [[[(x, wall)] for x in comp_sort[wall]]]
     length = 1
-    strength = []
+    strengths = []
     while length < len(puzzle_data):
         new = []
         for bridge in options[length-1]:
             comp, used_pin = bridge[-1]
             comp_used = [x[0] for x in bridge]
-            strength.append(sum([sum(puzzle_data[x]) for x in comp_used]))
+            strengths.append((sum([sum(puzzle_data[x]) for x in comp_used]), length-1))
             if puzzle_data[comp][0] != puzzle_data[comp][1]:
                 pin = (set(puzzle_data[comp]) - {used_pin}).pop()
             else:
@@ -38,7 +38,14 @@ def solve(puzzle_data):
                     new.append(current)
         options.append(new)
         length += 1
-    return max(strength), 0
+    lengths = [x[1] for x in strengths]
+    longest = max(lengths)
+    bridge_long = []
+    for brig in strengths:
+        sth, l = brig
+        if l == longest:
+            bridge_long.append(sth)
+    return max([x[0] for x in strengths]), max(bridge_long)
 
 puzzle_path = "input_day24.txt"
 with open(puzzle_path) as f:
