@@ -25,7 +25,14 @@ def parse(puzzle_input):
             write = int(line[4][0])
             i += 1
             line = puzzle_input[i].strip().split()
-            move = line[6][0]
+            direction = line[6][0]
+            if direction == 'r':
+                move = 1
+            elif direction == 'l':
+                move = -1
+            else:
+                print "unknown move"
+                move = 0
             i += 1
             line = puzzle_input[i].strip().split()
             cont = line[4][0]
@@ -40,7 +47,25 @@ def parse(puzzle_input):
     return data
     
 def solve(puzzle_data):
-    return 0
+    start, check = puzzle_data
+    tape = [0]
+    pos = 0
+    i = 0
+    state = start
+    while i < check:
+        value = tape[pos]
+        action = states[state][value]
+        tape[pos] = action[0]
+        pos += action[1]
+        if pos < 0:
+            tape.insert(0,0)
+            pos += 1
+        if pos == len(tape):
+            tape.append(0)
+        state = action[2]
+        i += 1
+    
+    return sum(tape)
 
 puzzle_path = "input_day25.txt"
 with open(puzzle_path) as f:
